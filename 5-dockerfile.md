@@ -53,17 +53,36 @@ docker build -t <nombre imagen>:<tag> .
 ### Ejecutar el archivo Dockerfile y construir una imagen en la versión 1.0
 No olvides verificar en qué directorio se encuentra el archivo Dockerfile
 ```
-
+docker build -t mi-apache:1.0 .
 ```
 
 **¿Cuántos pasos se han ejecutado?**
 # RESPONDER 
 
+Se corrieron solo 4 pasos y luego surgio un error, esto sucede porque la imagen de centos:7 esta descontinuada y ya no funciona con normalidad.
+
+
+<img width="1449" height="630" alt="image" src="https://github.com/user-attachments/assets/6257cb72-184a-4b64-9dde-735092b89251" />
+
+Por tanto se debe hacer una modificacion al Dockerfile
+
+<img width="433" height="188" alt="image" src="https://github.com/user-attachments/assets/f67cdf70-0796-4c19-b836-1af14af291e0" />
+
+
+Corregido esto se ejecutan 4 pasos
+
+<img width="1438" height="591" alt="image" src="https://github.com/user-attachments/assets/bfb80523-bc4c-4602-8adb-8a1cbfb4f4af" />
+
 ### Inspeccionar la imagen creada
 # COMPLETAR CON UNA CAPTURA
 
+<img width="1118" height="647" alt="image" src="https://github.com/user-attachments/assets/9b7f4a7b-95af-4037-855e-7bb9a47cfdc3" />
+
 **Modificar el archivo index.html para incluir su nombre y luego crear una nueva versión de la imagen anterior**
 **¿Cuántos pasos se han ejecutado? ¿Observa algo diferente en la creación de la imagen**
+<img width="1457" height="550" alt="image" src="https://github.com/user-attachments/assets/5f510828-df4e-4e7e-8975-b6ab83af9915" />
+
+Se ejecutaron nuevamente 4 pasos pero los pasos que ya fueron realizados en la anterior version y no han habido cambios (para mi caso el nombre modificado de index.html ya fue cambiado en la primera version de la imagen) todos aparecen como CACHED, y el tiempo de creacion dura mucho menos.
 
 ## Mecanismo de caché
 Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso de construcción y evitar la repetición de pasos que no han cambiado. Cada instrucción en un Dockerfile crea una capa en la imagen final. Docker intenta reutilizar las capas de una construcción anterior si no han cambiado, lo que reduce significativamente el tiempo de construcción.
@@ -75,14 +94,18 @@ Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso
 
 ### Crear un contenedor a partir de las imagen creada, mapear todos los puertos
 ```
-
+docker run -d --name miapache -P mi-apache:2.0
 ```
 
 ### ¿Con que puerto host se está realizando el mapeo?
 # COMPLETAR CON LA RESPUESTA
+32768
+<img width="1908" height="54" alt="image" src="https://github.com/user-attachments/assets/5b629b17-1488-4c41-8b21-e576a211e81e" />
+
 
 **¿Qué es una imagen huérfana?**
 # COMPLETAR CON LA RESPUESTA
+Es una imagen que no tiene etiqueta (tag) y no está asociada a ningún contenedor, por lo que no está siendo utilizada.
 
 ### Identificar imágenes huérfanas
 ```
